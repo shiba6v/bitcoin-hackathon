@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  previous_block: MyString
+  nonce: 1
+  prev_timestamp: 2017-07-15 16:40:13
+  success: 1
+
+two:
+  previous_block: MyString
+  nonce: 1
+  prev_timestamp: 2017-07-15 16:40:13
+  success: 1

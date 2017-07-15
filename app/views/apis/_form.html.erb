@@ -1,0 +1,37 @@
+<%= form_for(api) do |f| %>
+  <% if api.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(api.errors.count, "error") %> prohibited this api from being saved:</h2>
+
+      <ul>
+      <% api.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :previous_block %>
+    <%= f.text_field :previous_block %>
+  </div>
+
+  <div class="field">
+    <%= f.label :nonce %>
+    <%= f.number_field :nonce %>
+  </div>
+
+  <div class="field">
+    <%= f.label :prev_timestamp %>
+    <%= f.datetime_select :prev_timestamp %>
+  </div>
+
+  <div class="field">
+    <%= f.label :success %>
+    <%= f.number_field :success %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

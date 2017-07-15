@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Previous block:</strong>
+  <%= @api.previous_block %>
+</p>
+
+<p>
+  <strong>Nonce:</strong>
+  <%= @api.nonce %>
+</p>
+
+<p>
+  <strong>Prev timestamp:</strong>
+  <%= @api.prev_timestamp %>
+</p>
+
+<p>
+  <strong>Success:</strong>
+  <%= @api.success %>
+</p>
+
+<%= link_to 'Edit', edit_api_path(@api) %> |
+<%= link_to 'Back', apis_path %>

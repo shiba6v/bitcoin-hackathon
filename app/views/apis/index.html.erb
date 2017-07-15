@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Apis</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Previous block</th>
+      <th>Nonce</th>
+      <th>Prev timestamp</th>
+      <th>Success</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @apis.each do |api| %>
+      <tr>
+        <td><%= api.previous_block %></td>
+        <td><%= api.nonce %></td>
+        <td><%= api.prev_timestamp %></td>
+        <td><%= api.success %></td>
+        <td><%= link_to 'Show', api %></td>
+        <td><%= link_to 'Edit', edit_api_path(api) %></td>
+        <td><%= link_to 'Destroy', api, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Api', new_api_path %>
