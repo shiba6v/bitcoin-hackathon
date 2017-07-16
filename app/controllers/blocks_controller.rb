@@ -11,24 +11,31 @@ class BlocksController < ApplicationController
   end
 
   def start
+    session[:session_id] = SecureRandom.uuid
     render :json => generate_range
   end
 
   def reload
-    @history = History.find_by(prev_block: @request[:prevBlock], nonce_start: @request[:rangeStart], nonce_end: @request[:rangeEnd])
+    @history = History.find_by(prev_block: @request[:prevBlock], nonce_start: @request[:rangeStart], nonce_end: @request[:rangeEnd], session_id: session[:session_id])
+    start if @history.nil?
     @history.finish = true
     @history.save
     @block = Block.find_by(prev_block: @request[:prevBlock])
-    @block.result_block = @request[:result]
     @block.save
 
     if @request[:result]
+      @block.result_block = @request[:result]
       puts "======================"
       puts @request[:result]
       puts "======================"
     end
 
     render :json => generate_range
+  end
+
+  def analytics
+    puts History.where(updated_at: Time.now - 30.second).uniq(:session_id).count
+
   end
 
   # GET /blocks/1
@@ -91,7 +98,7 @@ class BlocksController < ApplicationController
       prev_history = History.where(prev_block: block.prev_block).last
       nonce_end = prev_history.nil? ? OFFSET : prev_history.nonce_end
       puts prev_history
-      @history = History.new(prev_block: block.prev_block,nonce_start: nonce_end + 1, nonce_end: nonce_end + RANGE)
+      @history = History.new(prev_block: block.prev_block,nonce_start: nonce_end + 1, nonce_end: nonce_end + RANGE, session_id: session[:session_id])
       @history.save
       assignment = {rangeStart: @history.nonce_start,rangeEnd: @history.nonce_end,prevBlock: @history.prev_block,markleRoot: block.markle_root, timestamp: block.prev_timestamp,bits: block.bits, version: block.version}
       return assignment
