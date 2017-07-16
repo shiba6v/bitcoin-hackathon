@@ -12,5 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require_tree .
+//= require_self
+
+import 'babel-polyfill';
+
+import './static_pages';
