@@ -82,11 +82,10 @@ export default {
       return this.convertString(pass2)
     },
     exitCalc (nonce) {
-      this.resultMesage = `You found the Golden TIcket! ${nonce}`
+      this.resultMesage = `You have found the Golden TIcket!`
       this.result = nonce
       console.log(this.trayingAt)
       this.isCalculating = false
-      alert(this.resultMesage)
 
     },
     isGoldenTicket (num) {
