@@ -16,8 +16,8 @@ class BlocksController < ApplicationController
   end
 
   def reload
-    @history = History.find_by(prev_block: @request[:prevBlock], nonce_start: @request[:rangeStart], nonce_end: @request[:rangeEnd], session_id: session[:session_id])
-    start if @history.nil?
+    @history = History.find_by(prev_block: @request[:prevBlock], nonce_start: @request[:rangeStart], nonce_end: @request[:rangeEnd])
+    return if @history.nil?
     @history.finish = true
     @history.save
     @block = Block.find_by(prev_block: @request[:prevBlock])
@@ -34,8 +34,9 @@ class BlocksController < ApplicationController
   end
 
   def analytics
-    puts History.where(updated_at: Time.now - 30.second).uniq(:session_id).count
-
+    user_count = History.count('DISTINCT session_id')
+    analytics_data = {user_count: user_count}
+    render :json => analytics_data
   end
 
   # GET /blocks/1
