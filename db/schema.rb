@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20170715082042) do
 
-  create_table "apis", force: :cascade do |t|
+  create_table "blocks", force: :cascade do |t|
     t.string   "prev_block"
     t.datetime "prev_timestamp"
     t.integer  "bits"

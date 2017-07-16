@@ -1,48 +1,48 @@
 require 'test_helper'
 
-class ApisControllerTest < ActionDispatch::IntegrationTest
+class BlocksControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @api = apis(:one)
+    @block = blocks(:one)
   end
 
   test "should get index" do
-    get apis_url
+    get blocks_url
     assert_response :success
   end
 
   test "should get new" do
-    get new_api_url
+    get new_block_url
     assert_response :success
   end
 
-  test "should create api" do
-    assert_difference('Api.count') do
-      post apis_url, params: { api: { nonce: @api.nonce, prev_timestamp: @api.prev_timestamp, previous_block: @api.previous_block, success: @api.success } }
+  test "should create block" do
+    assert_difference('Block.count') do
+      post blocks_url, params: { block: { nonce: @block.nonce, prev_timestamp: @block.prev_timestamp, previous_block: @block.previous_block, success: @block.success } }
     end
 
-    assert_redirected_to api_url(Api.last)
+    assert_redirected_to block_url(Block.last)
   end
 
-  test "should show api" do
-    get api_url(@api)
+  test "should show block" do
+    get block_url(@block)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_api_url(@api)
+    get edit_block_url(@block)
     assert_response :success
   end
 
-  test "should update api" do
-    patch api_url(@api), params: { api: { nonce: @api.nonce, prev_timestamp: @api.prev_timestamp, previous_block: @api.previous_block, success: @api.success } }
-    assert_redirected_to api_url(@api)
+  test "should update block" do
+    patch block_url(@block), params: { block: { nonce: @block.nonce, prev_timestamp: @block.prev_timestamp, previous_block: @block.previous_block, success: @block.success } }
+    assert_redirected_to block_url(@block)
   end
 
-  test "should destroy api" do
-    assert_difference('Api.count', -1) do
-      delete api_url(@api)
+  test "should destroy block" do
+    assert_difference('Block.count', -1) do
+      delete block_url(@block)
     end
 
-    assert_redirected_to apis_url
+    assert_redirected_to blocks_url
   end
 end

@@ -2,38 +2,38 @@
 
 <p>
   <strong>Previous block:</strong>
-  <%= @api.previous_block %>
+  <%= @block.previous_block %>
 </p>
 
 <p>
   <strong>Prev timestamp:</strong>
-  <%= @api.prev_timestamp %>
+  <%= @block.prev_timestamp %>
 </p>
 
 <p>
   <strong>Bits:</strong>
-  <%= @api.bits %>
+  <%= @block.bits %>
 </p>
 
 <p>
   <strong>Markle Root:</strong>
-  <%= @api.markle_root %>
+  <%= @block.markle_root %>
 </p>
 
 <p>
   <strong>Result Block:</strong>
-  <%= @api.result_block %>
+  <%= @block.result_block %>
 </p>
 
 <p>
   <strong>Result Block:</strong>
-  <%= @api.result_block %>
+  <%= @block.result_block %>
 </p>
 
 <p>
   <strong>Version:</strong>
-  <%= @api.version %>
+  <%= @block.version %>
 </p>
 
-<%= link_to 'Edit', edit_api_path(@api) %> |
-<%= link_to 'Back', apis_path %>
+<%= link_to 'Edit', edit_block_path(@block) %> |
+<%= link_to 'Back', blocks_path %>

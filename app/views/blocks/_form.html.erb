@@ -1,10 +1,10 @@
-<%= form_for(api) do |f| %>
-  <% if api.errors.any? %>
+<%= form_for(block) do |f| %>
+  <% if block.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(api.errors.count, "error") %> prohibited this api from being saved:</h2>
+      <h2><%= pluralize(block.errors.count, "error") %> prohibited this block from being saved:</h2>
 
       <ul>
-      <% api.errors.full_messages.each do |message| %>
+      <% block.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ApiTest < ActiveSupport::TestCase
+class BlockTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

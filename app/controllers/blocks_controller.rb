@@ -1,13 +1,13 @@
-class ApisController < ApplicationController
-  before_action :set_api, only: [:reload]
+class BlocksController < ApplicationController
+  before_action :set_block, only: [:reload]
   skip_before_filter :verify_authenticity_token
   RANGE = 10000
   OFFSET = 	3713310261
 
-  # GET /apis
-  # GET /apis.json
+  # GET /blocks
+  # GET /blocks.json
   def index
-    @apis = Api.all
+    @blocks = Block.all
   end
 
   def start
@@ -18,9 +18,9 @@ class ApisController < ApplicationController
     @history = History.find_by(prev_block: @request[:prevBlock], nonce_start: @request[:rangeStart], nonce_end: @request[:rangeEnd])
     @history.finish = true
     @history.save
-    @api = Api.find_by(prev_block: @request[:prevBlock])
-    @api.result_block = @request[:result]
-    @api.save
+    @block = Block.find_by(prev_block: @request[:prevBlock])
+    @block.result_block = @request[:result]
+    @block.save
 
     if @request[:result]
       puts "======================"
@@ -31,63 +31,63 @@ class ApisController < ApplicationController
     render :json => generate_range
   end
 
-  # GET /apis/1
-  # GET /apis/1.json
+  # GET /blocks/1
+  # GET /blocks/1.json
   def show
   end
 
-  # GET /apis/new
+  # GET /blocks/new
   def new
-    @api = Api.new
+    @block = Block.new
   end
 
-  # GET /apis/1/edit
+  # GET /blocks/1/edit
   def edit
   end
 
-  # POST /apis
-  # POST /apis.json
+  # POST /blocks
+  # POST /blocks.json
   def create
-    @api = Api.new(api_params)
+    @block = Block.new(block_params)
 
     respond_to do |format|
-      if @api.save
-        format.html { redirect_to @api, notice: 'Api was successfully created.' }
-        format.json { render :show, status: :created, location: @api }
+      if @block.save
+        format.html { redirect_to @block, notice: 'Block was successfully created.' }
+        format.json { render :show, status: :created, location: @block }
       else
         format.html { render :new }
-        format.json { render json: @api.errors, status: :unprocessable_entity }
+        format.json { render json: @block.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /apis/1
-  # PATCH/PUT /apis/1.json
+  # PATCH/PUT /blocks/1
+  # PATCH/PUT /blocks/1.json
   def update
     respond_to do |format|
-      if @api.update(api_params)
-        format.html { redirect_to @api, notice: 'Api was successfully updated.' }
-        format.json { render :show, status: :ok, location: @api }
+      if @block.update(block_params)
+        format.html { redirect_to @block, notice: 'Block was successfully updated.' }
+        format.json { render :show, status: :ok, location: @block }
       else
         format.html { render :edit }
-        format.json { render json: @api.errors, status: :unprocessable_entity }
+        format.json { render json: @block.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /apis/1
-  # DELETE /apis/1.json
+  # DELETE /blocks/1
+  # DELETE /blocks/1.json
   def destroy
-    @api.destroy
+    @block.destroy
     respond_to do |format|
-      format.html { redirect_to apis_url, notice: 'Api was successfully destroyed.' }
+      format.html { redirect_to blocks_url, notice: 'Block was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
     def generate_range
-      block = Api.last
+      block = Block.last
       prev_history = History.where(prev_block: block.prev_block).last
       nonce_end = prev_history.nil? ? OFFSET : prev_history.nonce_end
       puts prev_history
@@ -98,13 +98,13 @@ class ApisController < ApplicationController
     end
 
     # Use callbacks to share common setup or constraints between actions.
-    def set_api
+    def set_block
       @request = JSON.parse(request.body.read, {:symbolize_names => true})
-      @api = Api.find_by(prev_block: @request[:prev_block])
+      @block = Block.find_by(prev_block: @request[:prev_block])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def api_params
-      params.require(:api).permit(:previous_block, :nonce, :prev_timestamp, :success)
+    def block_params
+      params.require(:block).permit(:previous_block, :nonce, :prev_timestamp, :success)
     end
 end

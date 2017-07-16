@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-a = Api.new
+a = Block.new
 
 a.prev_block = "0000000000000000011e41ee8a75d92a05555589d53f25627ac8226192ddfe53"
 a.bits = 402742748
