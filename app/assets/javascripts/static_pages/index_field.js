@@ -21,7 +21,8 @@ export default {
         rangeEnd: 3713420261
       },
       nonceRange: [],
-      resultMesage: null
+      resultMesage: null,
+      result: null
     }
   },
   methods: {
@@ -66,8 +67,13 @@ export default {
 
         const result = await this.generateHash(base, nonce)
 
-        if (this.isGoldenTicket(result)) this.exitCalc(i)
+        if (this.isGoldenTicket(result)) {
+          this.exitCalc(i)
+          break
+        }
       }
+
+      this.sendResult
     },
     generateHash (base, nonce) {
       const headerHex = base + nonce
@@ -79,8 +85,10 @@ export default {
     },
     exitCalc (nonce) {
       this.resultMesage = `You found the Golden TIcket! ${nonce}`
+      this.result = nonce
       console.log(this.trayingAt)
       alert(this.resultMesage)
+
     },
     isGoldenTicket (num) {
       // console.log(num)
@@ -234,8 +242,18 @@ export default {
       this.info = params
       console.log(this.info)
     },
-    sendResult () {
-
+    async sendResult () {
+      const url = '/api/vi/mining'
+      const params = await HTTP.post(url, {
+        prevBlock: this.info.prevBlock,
+        rangeStart: this.info.rangeStart,
+        rangeEnd: this.info.rangeEnd,
+        result: this.result
+      })
+      if (!this.result) {
+        this.info = params
+        this.exec()
+      }
     }
   },
   mounted () {
