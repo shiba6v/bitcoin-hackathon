@@ -16,4 +16,5 @@
 
 import 'babel-polyfill';
 
+import './histories';
 import './static_pages';

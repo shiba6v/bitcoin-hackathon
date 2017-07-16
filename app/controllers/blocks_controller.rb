@@ -37,7 +37,7 @@ class BlocksController < ApplicationController
   def analytics
     user_count = History.count('DISTINCT session_id')
     analytics_data = {user_count: user_count}
-    render :json => analytics_data
+    render :json => History.all.to_json
   end
 
   # GET /blocks/1
