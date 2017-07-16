@@ -51,7 +51,7 @@ export default {
       const end = this.info.rangeEnd
 
       for (let i = start; i <= end; i++) {
-        // console.log(i)
+        console.log(i)
         this.calcTimes++
         this.tryingAt = i
         const nonce = this.convertNum(i)
@@ -73,7 +73,7 @@ export default {
         }
       }
 
-      this.sendResult
+      this.sendResult()
     },
     generateHash (base, nonce) {
       const headerHex = base + nonce
@@ -91,7 +91,7 @@ export default {
 
     },
     isGoldenTicket (num) {
-      // console.log(num)
+      console.log(num)
       return num.match(/^00000000000000000/gi)
     },
     updateCalcTimes () {
@@ -243,7 +243,7 @@ export default {
       console.log(this.info)
     },
     async sendResult () {
-      const url = '/api/vi/mining'
+      const url = '/api/v1/mining'
       const params = await HTTP.post(url, {
         prevBlock: this.info.prevBlock,
         rangeStart: this.info.rangeStart,

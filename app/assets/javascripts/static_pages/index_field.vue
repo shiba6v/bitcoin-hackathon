@@ -38,6 +38,7 @@
       </div>
     </div>
     <div class="result-message" v-if="resultMesage">{{ resultMesage }}</div>
+    <div class="andy">{{ result }}</div>
   </div>
 </template>
 
