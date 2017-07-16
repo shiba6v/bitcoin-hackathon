@@ -4,7 +4,7 @@ class CreateHistories < ActiveRecord::Migration[5.0]
       t.integer :nonce_start, null: false, limit: 8
       t.integer :nonce_end, null: false, limit: 8
       t.string :prev_block, null: false
-      t.string :result_block
+      t.boolean :finish, default: false
       t.timestamps
     end
   end

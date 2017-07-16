@@ -1,7 +1,7 @@
 class ApisController < ApplicationController
   before_action :set_api, only: [:reload]
   skip_before_filter :verify_authenticity_token
-  RANGE = 100000
+  RANGE = 1000
   OFFSET = 3713000000
 
   # GET /apis
@@ -15,15 +15,11 @@ class ApisController < ApplicationController
   end
 
   def reload
-    @history = History.find_by(prev_block: @request[:prev_block], nonce_start: @request[:rangeStart], nonce_end: @request[:rangeEnd])
-    @history.result_block = @request[:result]
+    @history = History.find_by(prev_block: @request[:prevBlock], nonce_start: @request[:rangeStart], nonce_end: @request[:rangeEnd])
+    @history.finish = true
     @history.save
-    puts @history
-    if @request[:result].nil?
-      @api.success = 0 #失敗
-    else
-      @api.success = 1 #成功
-    end
+    @api = Api.find_by(prev_block: @request[:prevBlock])
+    @api.result_block = @request[:result]
     @api.save
     render :json => generate_range
   end

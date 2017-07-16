@@ -5,7 +5,7 @@ class CreateApis < ActiveRecord::Migration[5.0]
       t.datetime :prev_timestamp
       t.integer :bits
       t.string :markle_root
-      t.integer :success
+      t.string :result_block
       t.integer :version, limit: 8
 
       t.timestamps

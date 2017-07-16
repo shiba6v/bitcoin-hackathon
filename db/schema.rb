@@ -17,19 +17,19 @@ ActiveRecord::Schema.define(version: 20170715082042) do
     t.datetime "prev_timestamp"
     t.integer  "bits"
     t.string   "markle_root"
-    t.integer  "success"
+    t.string   "result_block"
     t.integer  "version",        limit: 8
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
 
   create_table "histories", force: :cascade do |t|
-    t.integer  "nonce_start",  limit: 8, null: false
-    t.integer  "nonce_end",    limit: 8, null: false
-    t.string   "prev_block",             null: false
-    t.string   "result_block"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "nonce_start", limit: 8,                 null: false
+    t.integer  "nonce_end",   limit: 8,                 null: false
+    t.string   "prev_block",                            null: false
+    t.boolean  "finish",                default: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
 end
