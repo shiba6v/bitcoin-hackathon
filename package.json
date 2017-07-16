@@ -1,0 +1,8 @@
+{
+  "name": "bitcoin-hackathon",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:shiba6v/bitcoin-hackathon.git",
+  "author": "andoshin11 <shinglish11@gmail.com>",
+  "license": "MIT"
+}
