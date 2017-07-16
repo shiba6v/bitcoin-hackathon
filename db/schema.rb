@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170715074013) do
+ActiveRecord::Schema.define(version: 20170715082042) do
 
   create_table "apis", force: :cascade do |t|
     t.string   "prev_block"
@@ -20,6 +20,15 @@ ActiveRecord::Schema.define(version: 20170715074013) do
     t.integer  "success"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "histories", force: :cascade do |t|
+    t.integer  "nonce_start",  null: false
+    t.integer  "nonce_end",    null: false
+    t.string   "prev_block",   null: false
+    t.string   "result_block"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
 end

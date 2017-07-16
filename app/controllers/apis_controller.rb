@@ -1,14 +1,30 @@
 class ApisController < ApplicationController
-  before_action :set_api, only: [:show, :edit, :update, :destroy]
+  before_action :set_api, only: [:reload]
+  skip_before_filter :verify_authenticity_token
+  RANGE = 1000000
 
   # GET /apis
   # GET /apis.json
   def index
     @apis = Api.all
-    a = {rangeStart: 3713400261,rangeEnd: 3713410262,prevBlock: "0000000000000000011e41ee8a75d92a05555589d53f25627ac8226192ddfe53",markleRoot: "b440b224c33a8d34a35fdcd856b59f4cdfe6294bb2d318b58a40317be4d771b6", timestamp: "2017-07-15 04:48:47",bits: 402742748}
-    @block = Api.first
-    a = {rangeStart: 3713400261,rangeEnd: 3713410262,prevBlock: @block.prev_block,markleRoot: @block.markle_root, timestamp: @block.prev_timestamp.to_i,bits: @block.bits}
-    render :json => a
+  end
+
+  def start
+    render :json => generate_range
+  end
+
+  def reload
+    @history = History.find_by(prev_block: @request[:prev_block], nonce_start: @request[:rangeStart], nonce_end: @request[:rangeEnd])
+    @history.result_block = @request[:result]
+    @history.save
+    puts @history
+    if @request[:result].nil?
+      @api.success = 0 #失敗
+    else
+      @api.success = 1 #成功
+    end
+    @api.save
+    render :json => generate_range
   end
 
   # GET /apis/1
@@ -66,9 +82,23 @@ class ApisController < ApplicationController
   end
 
   private
+    def generate_range
+      block = Api.last
+      prev_history = History.where(prev_block: block.prev_block).last
+      nonce_end = prev_history.nil? ? -1 : prev_history.nonce_end
+      puts prev_history
+      @history = History.new(prev_block: block.prev_block,nonce_start: nonce_end + 1, nonce_end: nonce_end + 1 + RANGE)
+      @history.save
+      assignment = {rangeStart: @history.nonce_start,rangeEnd: @history.nonce_end,prevBlock: @history.prev_block,markleRoot: block.markle_root, timestamp: block.prev_timestamp.to_i,bits: block.bits}
+      return assignment
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_api
-      @api = Api.find(params[:id])
+      @request = JSON.parse(request.body.read, {:symbolize_names => true})
+      @api = Api.find_by(prev_block: @request[:prev_block])
+      puts "~~~~~~"
+      puts @api
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

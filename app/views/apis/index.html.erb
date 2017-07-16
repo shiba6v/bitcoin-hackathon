@@ -16,8 +16,8 @@
   <tbody>
     <% @apis.each do |api| %>
       <tr>
-        <td><%= api.previous_block %></td>
-        <td><%= api.nonce %></td>
+        <td><%= api.prev_block %></td>
+        <td><%= api.bits %></td>
         <td><%= api.prev_timestamp %></td>
         <td><%= api.success %></td>
         <td><%= link_to 'Show', api %></td>
