@@ -22,16 +22,14 @@ export default {
       },
       nonceRange: [],
       resultMesage: null,
-      result: null
+      result: null,
+      isCalculating: false,
     }
   },
   methods: {
-    async countCalc () {
-      for (let nonce in this.nonceRange) {
-        console.log(nonce)
-        this.calcTimes++
-        this.tryingAt = nonce
-      }
+    async startCalc () {
+      this.isCalculating = await true
+      this.exec()
     },
     async exec () {
       const convertVersion = this.convertNum(this.info.version)
@@ -87,6 +85,7 @@ export default {
       this.resultMesage = `You found the Golden TIcket! ${nonce}`
       this.result = nonce
       console.log(this.trayingAt)
+      this.isCalculating = false
       alert(this.resultMesage)
 
     },
