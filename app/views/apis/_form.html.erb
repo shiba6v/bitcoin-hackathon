@@ -17,18 +17,28 @@
   </div>
 
   <div class="field">
-    <%= f.label :nonce %>
-    <%= f.number_field :nonce %>
-  </div>
-
-  <div class="field">
     <%= f.label :prev_timestamp %>
     <%= f.datetime_select :prev_timestamp %>
   </div>
 
   <div class="field">
-    <%= f.label :success %>
-    <%= f.number_field :success %>
+    <%= f.label :bits %>
+    <%= f.number_field :bits %>
+  </div>
+
+  <div class="field">
+    <%= f.label :markle_root %>
+    <%= f.number_field :markle_root %>
+  </div>
+
+  <div class="field">
+    <%= f.label :result_block %>
+    <%= f.number_field :result_block %>
+  </div>
+
+  <div class="field">
+    <%= f.label :version %>
+    <%= f.number_field :version %>
   </div>
 
   <div class="actions">

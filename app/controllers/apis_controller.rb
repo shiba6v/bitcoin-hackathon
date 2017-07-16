@@ -1,8 +1,8 @@
 class ApisController < ApplicationController
   before_action :set_api, only: [:reload]
   skip_before_filter :verify_authenticity_token
-  RANGE = 1000
-  OFFSET = 	3713400261
+  RANGE = 10000
+  OFFSET = 	3713310261
 
   # GET /apis
   # GET /apis.json
@@ -21,6 +21,13 @@ class ApisController < ApplicationController
     @api = Api.find_by(prev_block: @request[:prevBlock])
     @api.result_block = @request[:result]
     @api.save
+
+    if @request[:result]
+      puts "======================"
+      puts @request[:result]
+      puts "======================"
+    end
+
     render :json => generate_range
   end
 
