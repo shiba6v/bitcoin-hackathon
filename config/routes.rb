@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'static_pages#index'
   get '/api/v1', to: 'blocks#start'
   post '/api/v1', to: 'blocks#reload'
   resources :blocks
