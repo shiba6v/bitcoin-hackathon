@@ -13,12 +13,11 @@ export default {
     async fetch () {
       const url = '/api/v1/histories'
       const params = await HTTP.get(url)
-      this.histories = params.history
-      this.count = params.count
-      console.log(this.histories)
+      this.histories = params
     },
   },
   mounted () {
-    setInterval(this.fetch(), 5000)
+    // this.fetch()
+    setInterval(this.fetch(), 10000)
   }
 }

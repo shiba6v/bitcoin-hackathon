@@ -10,9 +10,9 @@ class HistoriesController < ApplicationController
   def index_api
     history = History.all.to_json
     result = {}
-    result['count'] = History.count('DISTINCT session_id')
+    # result['count'] = History.count('DISTINCT session_id')
     result['history'] = history
-    render :json => result
+    render :json => history
   end
   # GET /histories/1
   # GET /histories/1.json
