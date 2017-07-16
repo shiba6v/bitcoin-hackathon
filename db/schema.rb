@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170715082042) do
+ActiveRecord::Schema.define(version: 20170716055718) do
 
   create_table "blocks", force: :cascade do |t|
     t.string   "prev_block"
-    t.datetime "prev_timestamp"
+    t.string   "prev_timestamp",           null: false
     t.integer  "bits"
     t.string   "markle_root"
     t.string   "result_block"

@@ -93,7 +93,7 @@ class BlocksController < ApplicationController
       puts prev_history
       @history = History.new(prev_block: block.prev_block,nonce_start: nonce_end + 1, nonce_end: nonce_end + RANGE)
       @history.save
-      assignment = {rangeStart: @history.nonce_start,rangeEnd: @history.nonce_end,prevBlock: @history.prev_block,markleRoot: block.markle_root, timestamp: block.prev_timestamp.to_i,bits: block.bits, version: block.version}
+      assignment = {rangeStart: @history.nonce_start,rangeEnd: @history.nonce_end,prevBlock: @history.prev_block,markleRoot: block.markle_root, timestamp: block.prev_timestamp,bits: block.bits, version: block.version}
       return assignment
     end
 
