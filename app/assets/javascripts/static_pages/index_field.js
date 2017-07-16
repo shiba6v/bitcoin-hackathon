@@ -12,13 +12,13 @@ export default {
       calcSpeed: 'null',
       tryingAt: null,
       info: {
-        version: 0x20000000,
-        prevBlock: '000000000000000000b86ce8d943cec4b00b9c100648d58fc89dc8393c7a56aa',
-        markleRoot: '10f6939f3827150184683beda19ac47fce798c10a8043180b1572ae2b3620ab7',
-        timestamp: '2017-07-16 01:11:04',
+        version: 0x20000002,
+        prevBlock: '0000000000000000011e41ee8a75d92a05555589d53f25627ac8226192ddfe53',
+        markleRoot: 'b440b224c33a8d34a35fdcd856b59f4cdfe6294bb2d318b58a40317be4d771b6',
+        timestamp: '2017-07-15 04:48:47',
         bits: 402742748,
-        rangeStart: 208151644,
-        rangeEnd: 208162654
+        rangeStart: 3713404261,
+        rangeEnd: 3713420261
       },
       nonceRange: [],
       resultMesage: null
@@ -50,7 +50,7 @@ export default {
       const end = this.info.rangeEnd
 
       for (let i = start; i <= end; i++) {
-        console.log(i)
+        // console.log(i)
         this.calcTimes++
         this.tryingAt = i
         const nonce = this.convertNum(i)
@@ -80,9 +80,10 @@ export default {
     exitCalc (nonce) {
       this.resultMesage = `You found the Golden TIcket! ${nonce}`
       console.log(this.trayingAt)
+      alert(this.resultMesage)
     },
     isGoldenTicket (num) {
-      console.log(num)
+      // console.log(num)
       return num.match(/^00000000000000000/gi)
     },
     updateCalcTimes () {
@@ -153,6 +154,8 @@ export default {
     },
     convertTimestamp () {
       const date = new Date(this.info.timestamp).getTime()
+      console.log('date is ')
+      console.log(date)
       const unixDate = new Date('1970-01-01 00:00:00').getTime()
       const diff = String(date - unixDate).split('').slice(0, 10).join('')
 
@@ -226,16 +229,17 @@ export default {
       }
     },
     async fetch () {
-      const url = 'https://bitcoin-hackathon.herokuapp.com/apis'
+      const url = '/api/v1/mining'
       const params = await HTTP.get(url)
-      console.log(params)
+      this.info = params
+      console.log(this.info)
     },
     sendResult () {
 
     }
   },
   mounted () {
-    // this.fetch()
+    this.fetch()
     // this.mining()
     // this.test()
     this.generateRange()
