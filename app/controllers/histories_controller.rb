@@ -7,6 +7,13 @@ class HistoriesController < ApplicationController
     @histories = History.all
   end
 
+  def index_api
+    history = History.all.to_json
+    result = {}
+    result['count'] = History.count('DISTINCT session_id')
+    result['history'] = history
+    render :json => result
+  end
   # GET /histories/1
   # GET /histories/1.json
   def show

@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Histories</h1>
+現在<%= @histories.count('DISTINCT session_id') %> 人が参加しています．
 
 <table>
   <thead>
@@ -9,6 +10,7 @@
       <th>Nonce end</th>
       <th>Prev block</th>
       <th>Finish</th>
+      <th>Session Id</th>
     </tr>
   </thead>
 
@@ -19,9 +21,13 @@
         <td><%= history.nonce_end %></td>
         <td><%= history.prev_block %></td>
         <td><%= history.finish %></td>
+        <td><%= history.session_id %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
+
+<div id='history-field'>
+</div>
