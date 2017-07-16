@@ -2,7 +2,7 @@ class BlocksController < ApplicationController
   before_action :set_block, only: [:reload]
   skip_before_filter :verify_authenticity_token
   RANGE = 10000
-  OFFSET = 	3713310261
+  OFFSET = 	3713210000
 
   # GET /blocks
   # GET /blocks.json
