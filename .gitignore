@@ -7,6 +7,9 @@
 # Ignore bundler config.
 /.bundle
 
+# Ignore bundler gems
+/vendor
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
@@ -19,3 +22,7 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Ignode Yarn
+/node_modules
+/yarn-error.log
