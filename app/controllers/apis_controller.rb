@@ -2,7 +2,7 @@ class ApisController < ApplicationController
   before_action :set_api, only: [:reload]
   skip_before_filter :verify_authenticity_token
   RANGE = 1000
-  OFFSET = 3713000000
+  OFFSET = 	3713400261
 
   # GET /apis
   # GET /apis.json
