@@ -7,4 +7,14 @@ Rails.application.routes.draw do
   resources :blocks, only: :index
   resources :histories, only: :index
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :miners, only: [] do
+        collection do
+          get :index
+        end
+      end
+    end
+  end
 end
