@@ -30,7 +30,6 @@ class BlockchainService
       version: block["ver"],
       bits: block["bits"],
       nonce: block["nonce"],
-
     }
   end
 
