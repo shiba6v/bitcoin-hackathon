@@ -16,7 +16,7 @@
       </div>
       <div class="info">
         <div class="info__label">Timestamp</div>
-        <div class="info__content">{{ info.timestamp }}</div>
+        <div class="info__content">{{ info.prevTimestamp }}</div>
       </div>
       <div class="info">
         <div class="info__label">Bits</div>
@@ -101,7 +101,7 @@
       -webkit-mask-image:-webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,1) 40%, rgba(0,0,0,0) 90%, rgba(0,0,0,0));
     }
     &:after {
-      color: #fff;        
+      color: #fff;
       -webkit-mask-image:-webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0) 20%, rgba(0,0,0,0.2) 36%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.2) 44%, rgba(0,0,0,0) 60%, rgba(0,0,0,0));
     }
   }

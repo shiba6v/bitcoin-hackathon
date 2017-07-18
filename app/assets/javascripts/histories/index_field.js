@@ -5,6 +5,7 @@ export default {
   },
   data () {
     return {
+      blocks: [],
       histories: [],
       count: 0,
     }
@@ -15,9 +16,16 @@ export default {
       const params = await HTTP.get(url)
       this.histories = params
     },
+    async getBlocks () {
+      const url = '/api/v1/blocks'
+      const {blocks: blocks} = await HTTP.get(url)
+      this.blocks = blocks
+      console.log(blocks)
+    }
   },
   mounted () {
-    // this.fetch()
-    setInterval(this.fetch(), 10000)
+    this.fetch()
+    this.getBlocks()
+    // setInterval(this.fetch(), 10000)
   }
 }

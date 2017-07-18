@@ -10,17 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170716064254) do
+ActiveRecord::Schema.define(version: 20170717173647) do
 
   create_table "blocks", force: :cascade do |t|
     t.string   "prev_block"
-    t.string   "prev_timestamp",           null: false
+    t.string   "prev_timestamp",                           null: false
     t.integer  "bits"
     t.string   "markle_root"
     t.string   "result_block"
     t.integer  "version",        limit: 8
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.text     "nonce"
+    t.boolean  "is_mined",                 default: false
+    t.text     "miner_id"
   end
 
   create_table "histories", force: :cascade do |t|
@@ -31,6 +34,8 @@ ActiveRecord::Schema.define(version: 20170716064254) do
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
     t.string   "session_id"
+    t.integer  "result"
+    t.integer  "block_id"
   end
 
 end
