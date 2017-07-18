@@ -12,14 +12,16 @@ export default {
       calcSpeed: 'null',
       tryingAt: null,
       info: {
+        resultBlock: null,
         version: 0x20000002,
         prevBlock: '0000000000000000011e41ee8a75d92a05555589d53f25627ac8226192ddfe53',
         markleRoot: 'b440b224c33a8d34a35fdcd856b59f4cdfe6294bb2d318b58a40317be4d771b6',
-        timestamp: '2017-07-15 04:48:47',
+        prevTimestamp: '2017-07-15 04:48:47',
         bits: 402742748,
-        rangeStart: 3713404261,
-        rangeEnd: 3713420261
+        isMined: false
       },
+      rangeStart: 1818331197,
+      rangeEnd: 1818343197,
       nonceRange: [],
       resultMesage: null,
       result: null,
@@ -29,13 +31,15 @@ export default {
   methods: {
     async startCalc () {
       this.isCalculating = await true
+      
       this.exec()
     },
     async exec () {
       const convertVersion = this.convertNum(this.info.version)
       const convertPrev = this.convertString(this.info.prevBlock)
       const convertMarkle = this.convertString(this.info.markleRoot)
-      const convertTimestamp = this.convertTimestamp()
+      const convertTimestamp = this.convertNum(this.info.prevTimestamp)
+      // const convertTimestamp = this.convertTimestamp()
       const convertBits = this.convertNum(this.info.bits)
       const base = convertVersion + convertPrev + convertMarkle + convertTimestamp + convertBits
 
@@ -45,8 +49,8 @@ export default {
       // console.log(convertTimestamp)
       // console.log(convertBits)
 
-      const start = this.info.rangeStart
-      const end = this.info.rangeEnd
+      const start = this.rangeStart
+      const end = this.rangeEnd
 
       for (let i = start; i <= end; i++) {
         console.log(i)
@@ -89,7 +93,7 @@ export default {
 
     },
     isGoldenTicket (num) {
-      console.log(num)
+      if (num.match(/^00000000000000000/gi)) console.log(num)
       return num.match(/^00000000000000000/gi)
     },
     updateCalcTimes () {
@@ -159,49 +163,13 @@ export default {
       return this.bin2hex(this.pack('V*', num))
     },
     convertTimestamp () {
-      const date = new Date(this.info.timestamp).getTime()
-      console.log('date is ')
-      console.log(date)
+      // const date = new Date(this.info.timestamp).getTime()
+      // console.log('date is ')
+      // console.log(date)
       const unixDate = new Date('1970-01-01 00:00:00').getTime()
-      const diff = String(date - unixDate).split('').slice(0, 10).join('')
+      const diff = String(this.info.timestamp - unixDate).split('').slice(0, 10).join('')
 
       return this.convertNum(Number(diff))
-    },
-    unicode2utf8_uint8array (str) {
-      let n = str.length
-      let idx = -1
-      let byteLength = 32
-      let bytes = new Uint8Array(byteLength)
-      let i
-      let c
-      let _bytes
-
-      for (i = 0; i < n; ++i) {
-        c = str.charCodeAt(i)
-        if (c <= 0x7F) {
-          bytes[++idx] = c
-        } else if (c <= 0x7FF) {
-          bytes[++idx] = 0xC0 | (c >>> 6)
-          bytes[++idx] = 0x80 | (c & 0x3F)
-        } else if (c <= 0xFFFF) {
-          bytes[++idx] = 0xE0 | (c >>> 12)
-          bytes[++idx] = 0x80 | ((c >>> 6) & 0x3F)
-          bytes[++idx] = 0x80 | (c & 0x3F)
-        } else {
-          bytes[++idx] = 0xF0 | (c >>> 18)
-          bytes[++idx] = 0x80 | ((c >>> 12) & 0x3F)
-          bytes[++idx] = 0x80 | ((c >>> 6) & 0x3F)
-          bytes[++idx] = 0x80 | (c & 0x3F)
-        }
-        // 倍々でメモリを確保していく
-        if (byteLength - idx <= 4) {
-          _bytes = bytes
-          byteLength *= 2
-          bytes = new Uint8Array(byteLength)
-          bytes.set(_bytes)
-        }
-      }
-      return bytes.subarray(0, ++idx)
     },
     hex2bin (hex) {
       return new Buffer(hex, 'hex')
@@ -227,30 +195,49 @@ export default {
       return rv
     },
     generateRange () {
-      const start = this.info.rangeStart
-      const end = this.info.rangeEnd
+      const start = this.rangeStart
+      const end = this.rangeEnd
 
       for (let i = start; i <= end; i++) {
         this.nonceRange.push(this.convertNum(i))
       }
     },
     async fetch () {
-      const url = '/api/v1/mining'
-      const params = await HTTP.get(url)
-      this.info = params
-      console.log(this.info)
+      const url = '/api/v1/blocks/latest'
+      const {block: block} = await HTTP.get(url)
+      this.info = block
+      console.log(block)
+      this.getRange()
+    },
+    async getRange () {
+      try {
+        const url = '/api/v1/blocks/range'
+        const data = await HTTP.get(url, {
+          resultBlock: this.info.resultBlock
+        })
+        this.rangeStart = data.rangeStart
+        this.rangeEnd = data.rangeEnd
+      } catch (e) {
+        alert(e.body.message)
+      }
     },
     async sendResult () {
-      const url = '/api/v1/mining'
-      const params = await HTTP.post(url, {
-        prevBlock: this.info.prevBlock,
-        rangeStart: this.info.rangeStart,
-        rangeEnd: this.info.rangeEnd,
-        result: this.result
-      })
-      if (!this.result) {
-        this.info = params
-        this.exec()
+      try {
+        const url = '/api/v1/blocks/result'
+        const data = await HTTP.post(url, {
+          resultBlock: this.info.resultBlock,
+          rangeStart: this.rangeStart,
+          rangeEnd: this.rangeEnd,
+          result: this.result
+        })
+        if (!this.result) {
+          this.rangeStart = data.rangeStart
+          this.rangeEnd = data.rangeEnd
+          this.exec()
+        } else {
+        }
+      } catch (e) {
+        alert(e.body.message)
       }
     }
   },
