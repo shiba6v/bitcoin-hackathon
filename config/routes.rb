@@ -10,6 +10,15 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+      resources :blocks, only: [] do
+        collection do
+          get :index
+          get :latest
+          get :range
+          post :result
+        end
+      end
+
       resources :miners, only: [] do
         collection do
           get :index
